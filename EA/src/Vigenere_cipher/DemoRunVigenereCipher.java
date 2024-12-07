@@ -23,6 +23,8 @@ public class DemoRunVigenereCipher {
 
         String updatedKey = VigenereCipher.generateKey(userInput.getUserInput(),key);
 
+        System.out.println("Generated Key : "+updatedKey);
+
         String encryptedUserInput = VigenereCipher.encrypt(userInput.getUserInput(),updatedKey);
 
         System.out.println("User Entered Input is : " +userInput.getUserInput());

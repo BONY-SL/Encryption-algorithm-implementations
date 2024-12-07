@@ -87,8 +87,6 @@ public class VigenereCipher {
 
     public static String deCrypt(String encryptedUserInput, String key) {
 
-        System.out.println(encryptedUserInput);
-        System.out.println(key);
 
         StringBuilder stringBuilder = new StringBuilder();
 

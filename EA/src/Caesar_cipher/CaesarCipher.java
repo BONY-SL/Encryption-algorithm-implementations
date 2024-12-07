@@ -1,63 +1,106 @@
 package Caesar_cipher;
 
+import java.util.HashMap;
+
 public class CaesarCipher {
 
-    private static final int shiftValue = 3;
+    private static final HashMap<Character,Integer> upperCase = new HashMap<>();
+    private static final HashMap<Integer,Character> upperCase2 = new HashMap<>();
+    private static final HashMap<Character,Integer> lowerCase = new HashMap<>();
+    private static final HashMap<Integer,Character> lowerCase2 = new HashMap<>();
 
-    public static String encrypt(String userInput) {
 
-        StringBuilder getEncrypted = new StringBuilder();
+    public static void setData(){
 
-        int j;
-
-        for (j = 0 ; j < userInput.length() ; j ++){
-
-            char characterAt = userInput.charAt(j);
-
-            if (Character.isUpperCase(characterAt)) {
-
-                char ch = (char) (((characterAt + shiftValue - 65) % 26) + 65);
-                getEncrypted.append(ch);
-
-            } else if (Character.isLowerCase(characterAt)) {
-
-                char ch = (char) (((characterAt + shiftValue - 97) % 26) + 97);
-                getEncrypted.append(ch);
-
-            } else {
-
-                getEncrypted.append(characterAt);
-            }
+        for (char c = 'A';c<='Z';c++){
+            upperCase.put(c,c-'A');
+            upperCase2.put(c-'A',c);
         }
-        return getEncrypted.toString();
+
+        for (char c = 'a';c<='z';c++){
+            lowerCase.put(c,c-'a');
+            lowerCase2.put(c-'a',c);
+        }
+
+        System.out.println(upperCase);
+        System.out.println(lowerCase);
     }
 
-    public static String deCrypt(String encryptedValue){
+
+    public static String encrypt(String plainText,int key){
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < plainText.length(); i++) {
+
+            char charAt = plainText.charAt(i);
+
+            if(Character.isLetter(plainText.charAt(i))){
+
+                if(Character.isUpperCase(plainText.charAt(i))){
 
 
-        StringBuilder getEncrypted = new StringBuilder();
+                    int shiftedVale = ((upperCase.get(charAt)+key) % 26);
+                    char c = upperCase2.get(shiftedVale);
+                    stringBuilder.append(c);
 
-        int j;
 
-        for (j = 0 ; j < encryptedValue.length() ; j ++){
 
-            char characterAt = encryptedValue.charAt(j);
+                } else if (Character.isLowerCase(plainText.charAt(i))) {
 
-            if (Character.isUpperCase(characterAt)) {
+                    int shiftedVale = ((lowerCase.get(charAt)+key) % 26);
+                    char c = lowerCase2.get(shiftedVale);
+                    stringBuilder.append(c);
 
-                char ch = (char) (((characterAt - shiftValue - 65) % 26) + 65);
-                getEncrypted.append(ch);
+                }
 
-            } else if (Character.isLowerCase(characterAt)) {
+            } else if (!Character.isLetter(plainText.charAt(i))) {
 
-                char ch = (char) (((characterAt - shiftValue - 97) % 26) + 97);
-                getEncrypted.append(ch);
+                stringBuilder.append(charAt);
 
-            } else {
-
-                getEncrypted.append(characterAt);
             }
+
         }
-        return getEncrypted.toString();
+        return stringBuilder.toString();
+    }
+
+    public static String deCrypt(String cipherText,int key){
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < cipherText.length(); i++) {
+
+            char charAt = cipherText.charAt(i);
+
+            if(Character.isLetter(cipherText.charAt(i))){
+
+                if(Character.isUpperCase(cipherText.charAt(i))){
+
+                    int shiftedVale = ((upperCase.get(charAt)-key) % 26);
+                    if(shiftedVale < 0){
+                        shiftedVale = shiftedVale + 26;
+                    }
+                    char c = upperCase2.get(shiftedVale);
+                    stringBuilder.append(c);
+
+                } else if (Character.isLowerCase(cipherText.charAt(i))) {
+
+                    int shiftedVale = ((lowerCase.get(charAt)-key) % 26);
+                    if(shiftedVale < 0){
+                        shiftedVale = shiftedVale + 26;
+                    }
+                    char c = lowerCase2.get(shiftedVale);
+                    stringBuilder.append(c);
+
+                }
+
+            } else if (!Character.isLetter(cipherText.charAt(i))) {
+
+                stringBuilder.append(charAt);
+
+            }
+
+        }
+        return stringBuilder.toString();
     }
 }

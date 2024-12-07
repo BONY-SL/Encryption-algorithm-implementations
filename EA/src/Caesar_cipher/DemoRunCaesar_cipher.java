@@ -14,12 +14,12 @@ public class DemoRunCaesar_cipher {
         System.out.print("Enter Your String Input : ");
         userInput.setUserInput(scanner.nextLine());
 
-        String encryptedUserInput = CaesarCipher.encrypt(userInput.getUserInput());
+        String encryptedUserInput = CaesarCipher.encrypt(userInput.getUserInput(),3);
 
         System.out.println("User Entered Input is : " +userInput.getUserInput());
         System.out.println("Encrypted Key is : "+encryptedUserInput);
 
-        String decryptedResult = CaesarCipher.deCrypt(encryptedUserInput);
+        String decryptedResult = CaesarCipher.deCrypt(encryptedUserInput,3);
         System.out.println("Decrypted Result : "+decryptedResult);
 
         if(userInput.getUserInput().equalsIgnoreCase(decryptedResult)){
